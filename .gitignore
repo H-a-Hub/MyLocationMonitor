@@ -102,4 +102,5 @@ README-cloudshell.txt
 # 開発用db
 db/locations.db
 
-
+# git account
+.gitconfig
