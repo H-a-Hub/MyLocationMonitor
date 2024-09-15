@@ -1,0 +1,105 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm specific files
+.idea/
+*.iml
+
+# VSCode specific files
+.vscode/
+
+# macOS specific files
+.DS_Store
+
+# Logs and database files
+*.log
+*.sqlite3
+
+# Test coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pytest
+.pytest_cache/
+
+# pylint
+pylint-report.txt
+pylint-output.txt
+
+# Visual Studio Code（VS Code）の「OSS」（Open Source Software）バージョンに関連したフォルダ
+.codeoss/
+
+# ユーザーごとのアプリケーションや環境設定を保存するために使われるディレクトリ
+.config/
+
+# ユーザー固有の Docker の設定
+.docker/
+
+# ユーザーごとのローカルなデータや設定、実行可能ファイルを保存するために使われるディレクトリ
+.local/
+
+# Red Hat のツールやサービスに関連する設定ファイルやキャッシュ
+.redhat/
+
+# bashログ関係
+.bash*
+.profile
+.sudo_as_admin_*
+
+# Amazon Web Services (AWS) の Python SDK である Boto が利用する設定ファイル
+.boto
+
+README-cloudshell.txt
+
+# 開発用db
+db/locations.db
+
+

@@ -1,0 +1,11 @@
+# 仮想環境を削除
+rm -rf .venv
+
+# 新しい仮想環境を作成
+python -m venv .venv
+
+# 仮想環境を有効化
+source .venv/bin/activate
+
+# 必要なパッケージをインストール
+pip install -r requirements.txt

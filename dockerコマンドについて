@@ -1,0 +1,23 @@
+# dockerイメージ flask-api を作成
+docker build -t flask-api .
+
+# コンテナを起動
+docker run -p 8080:8080 flask-api
+
+# Google Cloud の自アカウント内に Dockerイメージを作成
+# Google Cloud Buildサービスを使って、現在のディレクトリの内容を使い、Dockerイメージをビルドするコマンドです。
+# submitは、Cloud Buildに対してビルドリクエストを送信するという意味です。
+# --tag オプションは、ビルドしたDockerイメージの保存先を指定します。
+# gcr.io はGoogle Container Registry（GCR）のURLで、Google Cloudが提供するコンテナイメージの保存場所です。
+# <Google CloudプロジェクトID> は、Google CloudプロジェクトのIDです。このプロジェクト内のGCRにイメージが保存されます。これを実際のプロジェクトID（例: mylocationmonitor-434913など）に置き換えて使用します。
+# flask-api は、ビルドしたコンテナイメージの名前です。この名前でイメージが保存されます。
+gcloud builds submit --tag gcr.io/<Google CloudプロジェクトID>/flask-api
+
+# Google Cloud Runにアプリケーションをデプロイ（公開）
+# Cloud Runは、コンテナ化されたアプリケーションをサーバーレス環境で実行するためのサービスです。
+# --image オプションは、デプロイするコンテナイメージを指定します。
+# gcr.io はGoogle Container Registry（GCR）のURLで、Google Cloudが提供するコンテナイメージを保存するリポジトリです。
+# <Google CloudプロジェクトID> はGoogle CloudプロジェクトIDです。このプロジェクト内のリソースにアクセスできます。
+# flask-api は、コンテナイメージの名前です。これが、gcr.ioに格納されているFlaskアプリケーションのコンテナイメージを指します。
+gcloud run deploy --image gcr.io/<Google CloudプロジェクトID>/flask-api --platform managed
+
