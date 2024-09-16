@@ -26,6 +26,8 @@ class AppTest(unittest.TestCase):
     def test_regist_location_success(self):
         # 正しいデータを使ってPOSTリクエストを送信
         payload = {
+            "user": "taro",
+            "timestamp": "2024/09/16 12:22:54.800",
             "latitude": 35.6895,
             "longitude": 139.6917
         }

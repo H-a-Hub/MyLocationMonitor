@@ -64,17 +64,18 @@ def create_app() -> Flask:
             # エラー時のレスポンス
             return jsonify({"error": str(e)}), 400
 
-    def get_db_path(name = 'locations.db'):
-
-        # basedir = os.path.abspath(os.path.dirname(__file__))
-        # カレントワーキングディレクトリをプロジェクトのベースディレクトリとして設定
-        basedir = os.getcwd()
-
-        # データベースを「db」ディレクトリ内に置く
-        db_path = os.path.join(basedir, 'db', name)
-
-        # TODO: デプロイ環境では別の場所にしないとね
-
-        return db_path
-        
     return app
+
+
+def get_db_path(name = 'locations.db'):
+
+    # basedir = os.path.abspath(os.path.dirname(__file__))
+    # カレントワーキングディレクトリをプロジェクトのベースディレクトリとして設定
+    basedir = os.getcwd()
+
+    # データベースを「db」ディレクトリ内に置く
+    db_path = os.path.join(basedir, 'db', name)
+
+    # TODO: デプロイ環境では別の場所にしないとね
+
+    return db_path

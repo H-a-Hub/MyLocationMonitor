@@ -53,10 +53,12 @@ class DatabaseAccess:
         Locationオブジェクトを生成
         """
 
+        user = data.get('user')
+        timestamp = data.get('timestamp')
         latitude = data.get('latitude')
         longitude = data.get('longitude')
 
-        if latitude is None or longitude is None:
+        if latitude is None or longitude is None or timestamp is None:
             return jsonify({"error": "Latitude and longitude are required"}), 400
 
-        return Location(latitude=latitude, longitude=longitude)
+        return Location(user=user, latitude=latitude, longitude=longitude, timestamp=timestamp)
