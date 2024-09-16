@@ -1,6 +1,8 @@
 import unittest
 
-from location import create_app, db
+from location import create_app
+from location.modules import db
+
 
 class AppTest(unittest.TestCase):
     """

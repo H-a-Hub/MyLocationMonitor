@@ -2,7 +2,6 @@ import os
 from flask import Flask, request, jsonify
 
 from location.data_access import DatabaseAccess
-from location.modules import db
 
 """
 locationモジュール
@@ -10,6 +9,10 @@ locationモジュール
 
 
 def create_app() -> Flask:
+    ''' Flaskアプリ生成 '''
+
+    from location.modules import db
+
     """
     位置情報アプリのインスタンス作成
     """
@@ -22,7 +25,6 @@ def create_app() -> Flask:
 
     # アプリケーションとSQLAlchemyを初期化
     db.init_app(app)
-
 
     # 位置情報登録API エンドポイント
     @app.route('/api/regist_location', methods=['POST'])
@@ -62,18 +64,17 @@ def create_app() -> Flask:
             # エラー時のレスポンス
             return jsonify({"error": str(e)}), 400
 
+    def get_db_path(name = 'locations.db'):
+
+        # basedir = os.path.abspath(os.path.dirname(__file__))
+        # カレントワーキングディレクトリをプロジェクトのベースディレクトリとして設定
+        basedir = os.getcwd()
+
+        # データベースを「db」ディレクトリ内に置く
+        db_path = os.path.join(basedir, 'db', name)
+
+        # TODO: デプロイ環境では別の場所にしないとね
+
+        return db_path
+        
     return app
-
-
-def get_db_path(name = 'locations.db'):
-
-    # basedir = os.path.abspath(os.path.dirname(__file__))
-    # カレントワーキングディレクトリをプロジェクトのベースディレクトリとして設定
-    basedir = os.getcwd()
-
-    # データベースを「db」ディレクトリ内に置く
-    db_path = os.path.join(basedir, 'db', name)
-
-    # TODO: デプロイ環境では別の場所にしないとね
-
-    return db_path

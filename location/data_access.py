@@ -48,16 +48,15 @@ class DatabaseAccess:
             self.rollback()
             return {"error": str(e)}, 400
 
+    def create_location(data) -> Location:
+        """
+        Locationオブジェクトを生成
+        """
 
-def create_location(data) -> Location:
-    """
-    Locationオブジェクトを生成
-    """
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
 
-    latitude = data.get('latitude')
-    longitude = data.get('longitude')
+        if latitude is None or longitude is None:
+            return jsonify({"error": "Latitude and longitude are required"}), 400
 
-    if latitude is None or longitude is None:
-        return jsonify({"error": "Latitude and longitude are required"}), 400
-
-    return Location(latitude=latitude, longitude=longitude)
+        return Location(latitude=latitude, longitude=longitude)
