@@ -19,5 +19,4 @@ gcloud builds submit --tag gcr.io/<Google CloudプロジェクトID>/flask-api
 # gcr.io はGoogle Container Registry（GCR）のURLで、Google Cloudが提供するコンテナイメージを保存するリポジトリです。
 # <Google CloudプロジェクトID> はGoogle CloudプロジェクトIDです。このプロジェクト内のリソースにアクセスできます。
 # flask-api は、コンテナイメージの名前です。これが、gcr.ioに格納されているFlaskアプリケーションのコンテナイメージを指します。
-gcloud run deploy --image gcr.io/<Google CloudプロジェクトID>/flask-api --platform managed
-
+gcloud run deploy flask-api --image gcr.io/<Google CloudプロジェクトID>/flask-api --platform managed --region asia-east1

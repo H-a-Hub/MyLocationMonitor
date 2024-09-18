@@ -11,7 +11,10 @@ COPY app.py app.py
 # 依存関係をインストール
 RUN pip install -r requirements.txt
 
-# ポートを設定
+# Flaskの起動時に使うポートを指定
+ENV PORT 8080
+
+# ポート8080を公開
 EXPOSE 8080
 
 # アプリケーションを起動
