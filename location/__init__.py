@@ -34,13 +34,11 @@ def create_app() -> Flask:
             # POSTリクエストで送信されたJSONデータを取得
             data = request.get_json()
 
-            data_access = DatabaseAccess(db)
-
             # 位置情報を追加
-            response, status_code = data_access.add_location(data)
+            DatabaseAccess(db).add_location(data)
 
             # 成功時のレスポンス
-            return jsonify({"message": "Location registered successfully!"}), 201
+            return jsonify({"response": "Location registered successfully!"}), 201
 
         except Exception as e:
             # エラー時のレスポンス

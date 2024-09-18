@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from location.modules import Location
@@ -35,20 +36,18 @@ class DatabaseAccess:
         緯度と経度の位置情報をデータベースに保存するメソッド
         """
         try:
-            location = create_location(data)
+            location, status = self.create_location(data)
 
             # データベースに追加してコミット
             self.add(location)
             self.commit()
-
-            return {"message": "Location registered successfully!"}, 201
             
         except Exception as e:
-            # エラー時はロールバックしてエラーメッセージを返す
-            self.rollback()
-            return {"error": str(e)}, 400
+            self.rollback()    # エラー時はロールバックしておく
+            raise e
 
-    def create_location(data) -> Location:
+
+    def create_location(self, data):
         """
         Locationオブジェクトを生成
         """
@@ -58,7 +57,7 @@ class DatabaseAccess:
         latitude = data.get('latitude')
         longitude = data.get('longitude')
 
-        if latitude is None or longitude is None or timestamp is None:
-            return jsonify({"error": "Latitude and longitude are required"}), 400
+        if user is None or latitude is None or longitude is None or timestamp is None:
+            raise Exception(f'data has none elements {data}')
 
-        return Location(user=user, latitude=latitude, longitude=longitude, timestamp=timestamp)
+        return Location(user=user, latitude=latitude, longitude=longitude, timestamp=timestamp), 200

@@ -4,9 +4,9 @@ from location import create_app
 from location.modules import db
 
 
-class AppTest(unittest.TestCase):
+class WebApiTest(unittest.TestCase):
     """
-    Flaskアプリのテスト
+    WebAPIのテスト
     """
 
     def setUp(self):
@@ -46,11 +46,12 @@ class AppTest(unittest.TestCase):
 
         # ステータスコードが400（Bad Request）であることを確認
         self.assertEqual(response.status_code, 400)
-        self.assertIn(b'Latitude and longitude are required', response.data)
 
     def test_regist_location_invalid_data(self):
         # 不正な形式のデータを使ってPOSTリクエストを送信
         payload = {
+            "user": "jiro",
+            "timestamp": "2024/12/11 0:0:0",
             "latitude": "invalid",  # 無効な値
             "longitude": 139.6917
         }
