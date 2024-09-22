@@ -26,6 +26,10 @@ def create_app() -> Flask:
     # アプリケーションとSQLAlchemyを初期化
     db.init_app(app)
 
+    @app.route('/')
+    def hello():
+        return 'My Location Monitor.'
+
     # 位置情報登録API エンドポイント
     @app.route('/api/regist_location', methods=['POST'])
     def regist_location():

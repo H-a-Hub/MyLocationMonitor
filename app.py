@@ -1,10 +1,8 @@
-from flask import request, jsonify
+import os
+from flask import Flask
 
 from location import create_app
 from location.modules import db
-
-
-#--------------------------
 
 # Flaskアプリ生成
 app = create_app()
@@ -13,11 +11,8 @@ app = create_app()
 with app.app_context():
     db.create_all()
 
-#--------------------------
-
-# アプリケーションのエントリーポイント
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=8080)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    # Cloud Run のポート環境変数を使用し、デフォルトは 8080
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
