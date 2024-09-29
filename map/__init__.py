@@ -2,9 +2,9 @@ import requests
 
 from env import get_maps_api_key
 
-def get_google_map_data(latitude, longitude):
+def request_google_map_data(latitude, longitude):
     ''' 
-    Google Map のデータを取得 
+    Google Map のデータをリクエスト 
     '''
 
     api_key = get_maps_api_key()
@@ -15,10 +15,11 @@ def get_google_map_data(latitude, longitude):
     # Google Maps APIへのリクエスト
     response = requests.get(google_maps_url)
 
-    # エラーチェック
-    if response.status_code != 200:
-        return jsonify({'error': 'Failed to connect to Google Maps API'}), 500
+    return response
 
-    # レスポンスデータを返却
-    return jsonify(response.json())
+'''
+APIキーについて
 
+「APIの制限」項目で、以下を有効にしてください
+Places API
+'''

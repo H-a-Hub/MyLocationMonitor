@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 
 from location.data_access import DatabaseAccess
 
-from map import get_google_map_data
+from map import request_google_map_data
 
 """
 locationモジュール
@@ -81,10 +81,14 @@ def create_app() -> Flask:
             latitude = data.get('latitude')
             longitude = data.get('longitude')
 
-            res = get_google_map_data(latitude, longitude)
+            response = request_google_map_data(latitude, longitude)
+
+            # エラーチェック
+            if response.status_code != 200:
+                return jsonify({'error': 'Failed to connect to Google Maps API'}), 500
 
             # 成功時のレスポンス
-            return res, 200
+            return jsonify(response.json()), 200
 
         except Exception as e:
             # エラー時のレスポンス

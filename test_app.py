@@ -60,8 +60,8 @@ class WebApiTest(unittest.TestCase):
         # ステータスコードが400であることを確認
         self.assertEqual(response.status_code, 400)
 
-    def test_show_location_success(self):
-        # 正しいデータを使ってPOSTリクエストを送信
+    def test_show_location(self):
+        # 位置情報表示APIテスト
         payload = {
             "latitude": 35.6895,
             "longitude": 139.6917
