@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 
 from location.data_access import DatabaseAccess
 
-from map.google_map import get_google_map_data
+from map import get_google_map_data
 
 """
 locationモジュール
@@ -53,7 +53,7 @@ def create_app() -> Flask:
 
     # 位置情報全削除API エンドポイント
     @app.route('/api/rm_data', methods=['POST'])
-    def regist_location():
+    def rm_data():
 
         try:
             # POSTリクエストで送信されたJSONデータを取得
@@ -78,7 +78,10 @@ def create_app() -> Flask:
             # POSTリクエストで送信されたJSONデータを取得
             data = request.get_json()
 
-            res = get_google_map_data(40, 130)
+            latitude = data.get('latitude')
+            longitude = data.get('longitude')
+
+            res = get_google_map_data(latitude, longitude)
 
             # 成功時のレスポンス
             return res, 200
