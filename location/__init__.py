@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify
 
 from location.data_access import DatabaseAccess
 
+from map.google_map import get_google_map_data
+
 """
 locationモジュール
 """
@@ -49,6 +51,25 @@ def create_app() -> Flask:
             return jsonify({"error": str(e)}), 400
 
 
+    # 位置情報全削除API エンドポイント
+    @app.route('/api/rm_data', methods=['POST'])
+    def regist_location():
+
+        try:
+            # POSTリクエストで送信されたJSONデータを取得
+            data = request.get_json()
+
+            # db を削除
+
+
+            # 成功時のレスポンス
+            return jsonify({"response": "Location registered successfully!"}), 201
+
+        except Exception as e:
+            # エラー時のレスポンス
+            return jsonify({"error": str(e)}), 400
+
+
     # 位置情報表示API エンドポイント
     @app.route('/api/show_location', methods=['POST'])
     def show_location():
@@ -57,10 +78,10 @@ def create_app() -> Flask:
             # POSTリクエストで送信されたJSONデータを取得
             data = request.get_json()
 
-            data_access = DatabaseAccess(db)
+            res = get_google_map_data(40, 130)
 
             # 成功時のレスポンス
-            return jsonify({"message": "Location showed successfully!"}), 201
+            return res, 200
 
         except Exception as e:
             # エラー時のレスポンス
