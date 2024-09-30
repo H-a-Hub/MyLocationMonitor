@@ -1,7 +1,7 @@
 import unittest
 
-from location import create_app
-from location.modules import db
+from .location import create_app
+from .location.modules import db
 
 
 class WebApiTest(unittest.TestCase):

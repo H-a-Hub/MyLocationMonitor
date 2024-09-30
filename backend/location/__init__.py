@@ -1,9 +1,9 @@
 import os
 from flask import Flask, request, jsonify
 
-from location.data_access import DatabaseAccess
+from .data_access import DatabaseAccess
 
-from map import request_google_map_data
+from ..map import request_google_map_data
 
 """
 locationモジュール
@@ -13,7 +13,7 @@ locationモジュール
 def create_app() -> Flask:
     ''' Flaskアプリ生成 '''
 
-    from location.modules import db
+    from .modules import db
 
     """
     位置情報アプリのインスタンス作成
@@ -104,7 +104,7 @@ def get_db_path(name = 'locations.db'):
     basedir = os.getcwd()
 
     # データベースを「db」ディレクトリ内に置く
-    db_path = os.path.join(basedir, 'db', name)
+    db_path = os.path.join(basedir, 'backend', 'db', name)
 
     # TODO: デプロイ環境では別の場所にしないとね
 

@@ -1,8 +1,7 @@
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-from location.modules import Location
-
+from .modules import Location
 
 class DatabaseAccess:
     """ データベースアクセスを提供するクラス """

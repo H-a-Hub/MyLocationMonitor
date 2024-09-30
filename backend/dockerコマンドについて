@@ -4,6 +4,9 @@ docker build -t flask-api .
 # コンテナを起動
 docker run -p 8080:8080 flask-api
 
+
+cd backend
+
 # Google Cloud の自アカウント内に Dockerイメージを作成
 # Google Cloud Buildサービスを使って、現在のディレクトリの内容を使い、Dockerイメージをビルドするコマンドです。
 # submitは、Cloud Buildに対してビルドリクエストを送信するという意味です。

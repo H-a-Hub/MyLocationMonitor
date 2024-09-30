@@ -10,6 +10,9 @@ RUN mkdir -p /app/db /app/tmp /app/log
 # ソースファイルをコピー
 COPY app.py app.py
 COPY location/*.py /app/location/
+COPY map/*.py /app/map/
+COPY env/*.py /app/env/
+
 
 # 依存関係をインストール
 COPY requirements.txt requirements.txt
