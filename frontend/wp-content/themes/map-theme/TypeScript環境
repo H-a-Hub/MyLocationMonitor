@@ -1,0 +1,8 @@
+以下の手順で TypeScript環境を構築します
+
+cd frontend/theme
+npm init -y
+npm install typescript ts-loader webpack webpack-cli --save-dev
+
+
+
