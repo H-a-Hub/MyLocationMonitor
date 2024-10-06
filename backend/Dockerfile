@@ -11,7 +11,7 @@ RUN mkdir -p /app/db /app/tmp /app/log
 COPY app.py app.py
 COPY location/*.py /app/location/
 COPY map/*.py /app/map/
-COPY env/*.py /app/env/
+COPY setting/*.py /app/setting/
 
 
 # 依存関係をインストール

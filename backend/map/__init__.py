@@ -1,6 +1,6 @@
 import requests
 
-from ..env import get_maps_api_key
+from ..setting import get_maps_api_key
 
 def request_google_map_data(latitude, longitude):
     ''' 
