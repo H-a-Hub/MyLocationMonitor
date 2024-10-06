@@ -1,0 +1,34 @@
+# フロントエンド用ビルド
+
+steps:
+  # PROJECT_ID は Secret Manager から取得している
+  
+  # gcr.io へ Docker イメージをアップ
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        export PROJECT_ID=$(gcloud secrets versions access latest --secret=my_location_monitor_project_id)
+        echo "Using PROJECT_ID: $PROJECT_ID"
+
+        # フロントエンドの Docker イメージのビルド
+        gcloud builds submit --tag gcr.io/$PROJECT_ID/frontend frontend
+
+  # gcr.io へ Docker イメージでデプロイ
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        export PROJECT_ID=$(gcloud secrets versions access latest --secret=my_location_monitor_project_id)
+        echo "Deploying frontend to Cloud Run with PROJECT_ID: $PROJECT_ID"
+
+        gcloud run deploy frontend \
+          --image gcr.io/$PROJECT_ID/frontend \
+          --platform managed \
+          --region us-central1 \
+          --allow-unauthenticated
+
+images:
+  - 'gcr.io/$PROJECT_ID/frontend'
