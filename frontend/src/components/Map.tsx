@@ -8,6 +8,14 @@ interface MapProps {
   locations: Location[];
 }
 
+/**
+ * 地図 Reactコンポーネント
+ * 
+ * 地図を表示するコンポーネントです。
+ * マーカーやポリラインを描画します。
+ * 
+ * @returns {JSX.Element} 地図を含むJSX要素
+ */
 const Map: React.FC<MapProps> = ({ locations }) => {
   // MapContainerPropsに準拠したプロパティを設定
   const center: LatLngExpression = [locations[0].lat, locations[0].lng];
