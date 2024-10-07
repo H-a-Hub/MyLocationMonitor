@@ -1,5 +1,5 @@
 import React from 'react';
-import MapPage from './pages/MapPage';
+import MapPage from './components/MapPage';
 
 const App: React.FC = () => {
   return (

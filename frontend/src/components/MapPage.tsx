@@ -5,6 +5,7 @@ import { fetchLocationHistory, Location } from '../api/locationService';
 const MapPage: React.FC = () => {
   const [locations, setLocations] = useState<Location[]>([]);
 
+  // 初回起動時のエフェクト
   useEffect(() => {
     const getLocations = async () => {
       try {

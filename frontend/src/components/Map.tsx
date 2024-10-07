@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
+import { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Location } from '../api/locationService';
 
@@ -8,13 +9,18 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({ locations }) => {
+  // MapContainerPropsに準拠したプロパティを設定
+  const center: LatLngExpression = [locations[0].lat, locations[0].lng];
+  const zoom: number = 13;
+
   return (
-    <MapContainer center={[locations[0].lat, locations[0].lng]} zoom={13}>
+    // <MapContainer center={center} zoom={zoom}>
+    <MapContainer>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
+        // attribution={'&copy; OpenStreetMap contributors'}
       />
-      <Polyline positions={locations.map(loc => [loc.lat, loc.lng])} />
+      <Polyline positions={locations.map(loc => [loc.lat, loc.lng] as LatLngExpression)} />
     </MapContainer>
   );
 };
