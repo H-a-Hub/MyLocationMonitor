@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://my-location-monitor-93009588055.asia-east1.run.app';
 
 export interface Location {
   lat: number;
@@ -17,7 +17,7 @@ export interface Location {
 export const fetchLocationHistory = async (): Promise<Location[]> => {
   try {
     // backend API へ位置情報履歴をリクエスト
-    const response = await axios.get<Location[]>(`${API_BASE_URL}/locations`);
+    const response = await axios.get<Location[]>(`${API_BASE_URL}/show_location`);
     return response.data;
   } catch (error) {
     console.error('Error fetching location data:', error);
