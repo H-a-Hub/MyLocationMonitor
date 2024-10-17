@@ -1,0 +1,53 @@
+# バックエンド用ビルド
+
+steps:
+  # 環境変数 PROJECT_ID は Secret Manager から取得している
+  
+  # gcr.io へ Docker イメージをアップ
+  # gcr.io はGoogle Container Registry（GCR）のURLで、Google Cloudが提供するコンテナイメージの保存場所です。
+  # Google Cloud Buildサービスを使って、現在のディレクトリの内容を使い、Dockerイメージをビルドします。
+
+  # gcloud builds
+  #  submitは、Cloud Buildに対してビルドリクエストを送信するという意味です。
+  #  --tag オプションは、ビルドしたDockerイメージの保存先を指定します。
+  # backend は、ビルドしたコンテナイメージの名前です。この名前でイメージが保存されます。
+
+  # gcloud run deploy
+  # Cloud Runは、コンテナ化されたアプリケーションをサーバーレス環境で実行するためのサービスです。
+  # --image オプションは、デプロイするコンテナイメージを指定します。
+  # <Google CloudプロジェクトID> はGoogle CloudプロジェクトIDです。このプロジェクト内のリソースにアクセスできます。
+  # backend は、コンテナイメージの名前です。これが、gcr.ioに格納されているFlaskアプリケーションのコンテナイメージを指します。
+
+  # gcloud run services
+  # デプロイ後に、IAMポリシーを設定して、外部からサービスにアクセスできるようにします。
+  # roles/run.invoker: Cloud Runのサービスにアクセスする権限を持つロールで、これをallUsersに付与することで、誰でもサービスにアクセスできるようになります
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        export PROJECT_ID=$(gcloud secrets versions access latest --secret=my_location_monitor_project_id)
+        echo "Using PROJECT_ID: $PROJECT_ID"
+
+        echo "### start build ###"
+        gcloud builds submit --tag gcr.io/$PROJECT_ID/backend .
+        echo "### end build ###"
+
+        echo "### start deploy ###"
+        gcloud run deploy backend \
+          --image gcr.io/$PROJECT_ID/backend \
+          --platform managed \
+          --region asia-east1 \
+          --allow-unauthenticated
+        echo "### end deploy ###"
+
+        echo "### start add IAM policy ###"
+        gcloud run services add-iam-policy-binding backend \
+          --region=asia-east1 \
+          --member="allUsers" \
+          --role="roles/run.invoker"
+        echo "### end add IAM policy ###"
+
+images:
+  - 'gcr.io/$PROJECT_ID/backend'
