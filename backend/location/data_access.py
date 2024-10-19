@@ -1,5 +1,5 @@
 from flask import jsonify
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 
 from .modules import Location
 
@@ -60,3 +60,20 @@ class DatabaseAccess:
             raise Exception(f'data has none elements {data}')
 
         return Location(user=user, latitude=latitude, longitude=longitude, timestamp=timestamp), 200
+
+    def get_last_location(self):
+        """
+        最新の緯度と経度の位置情報をデータベースから取得するメソッド
+        """
+        try:
+            # Locationモデルをタイムスタンプで降順にソートし、最初のレコードを取得
+            last_location = self.query(Location).order_by(Location.timestamp.desc()).first()
+
+            # レコードが存在しない場合
+            if last_location is None:
+                raise Exception("No location data available")
+
+            return last_location
+            
+        except Exception as e:
+            raise e

@@ -4,6 +4,19 @@ from .location import create_app
 from .location.modules import db
 
 
+# ユニットテスト環境構築手順 
+# ディレクトリ移動
+#  cd backend/
+# Python仮想環境構築
+#  python3 -m venv venv
+# 仮想環境有効か
+#  source venv/bin/activate
+# Flask等をインストール
+#  pip install -r requirements.txt
+#   → backend/venv ディレクトリにインストールされます
+# 仮想環境を無効化したい場合は、deactivate
+
+
 class WebApiTest(unittest.TestCase):
     """
     WebAPIのテスト
@@ -59,6 +72,42 @@ class WebApiTest(unittest.TestCase):
 
         # ステータスコードが400であることを確認
         self.assertEqual(response.status_code, 400)
+
+    def test_get_last_location(self):
+        # モックのセットアップ
+        mock_location = MagicMock()
+        mock_location.user = "test_user"
+        mock_location.latitude = 35.6895
+        mock_location.longitude = 139.6917
+        mock_location.timestamp = "2024-10-18T15:30:00Z"
+
+        # DatabaseAccessのget_last_locationメソッドをモック
+        with unittest.mock.patch.object(DatabaseAccess, 'get_last_location', return_value=mock_location):
+            response = self.client.get('/api/get_last_location')
+
+            # ステータスコードが200であることを確認
+            assert response.status_code == 200
+
+            # レスポンスのJSONデータを取得
+            data = response.get_json()
+
+            # JSONデータが期待通りであることを確認
+            assert data['response']['user'] == "test_user"
+            assert data['response']['latitude'] == 35.6895
+            assert data['response']['longitude'] == 139.6917
+            assert data['response']['timestamp'] == "2024-10-18T15:30:00Z"
+
+    def test_get_last_location_no_data(self):
+        # DatabaseAccessのget_last_locationメソッドが例外をスローするようにモック
+        with unittest.mock.patch.object(DatabaseAccess, 'get_last_location', side_effect=Exception("No location data available")):
+            response = self.client.get('/api/get_last_location')
+
+            # ステータスコードが400であることを確認
+            assert response.status_code == 400
+
+            # エラーメッセージが正しいかを確認
+            data = response.get_json()
+            assert data['error'] == "No location data available"
 
     def test_show_location(self):
         # 位置情報表示APIテスト

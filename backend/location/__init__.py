@@ -51,6 +51,29 @@ def create_app() -> Flask:
             return jsonify({"error": str(e)}), 400
 
 
+    # 位置情報取得API エンドポイント
+    @app.route('/api/get_last_location', methods=['GET'])
+    def get_last_location():
+        try:
+            # 位置情報を取得
+            location = DatabaseAccess(db).get_last_location()
+
+            # locationがオブジェクトの場合、辞書形式に変換して返す必要があります。
+            location_data = {
+                "user": location.user,
+                "latitude": location.latitude,
+                "longitude": location.longitude,
+                "timestamp": location.timestamp
+            }
+
+            # 成功時のレスポンス
+            return jsonify({"response": location_data}), 200
+
+        except Exception as e:
+            # エラー時のレスポンス
+            return jsonify({"error": str(e)}), 400
+
+
     # 位置情報全削除API エンドポイント
     @app.route('/api/rm_data', methods=['POST'])
     def rm_data():
