@@ -9,7 +9,7 @@ from .location.modules import db
 #  cd backend/
 # Python仮想環境構築
 #  python3 -m venv venv
-# 仮想環境有効か
+# 仮想環境有効にする（毎回必要）
 #  source venv/bin/activate
 # Flask等をインストール
 #  pip install -r requirements.txt

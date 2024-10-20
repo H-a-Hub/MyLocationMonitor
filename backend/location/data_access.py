@@ -1,5 +1,5 @@
 from flask import jsonify
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 from .modules import Location
 

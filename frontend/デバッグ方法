@@ -4,7 +4,7 @@
 ターミナルで以下を実行
 
 ```
-cd /frontend
+cd frontend/
 
 PORT=3001 npm start
 ```
